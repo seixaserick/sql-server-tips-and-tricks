@@ -8,7 +8,7 @@ Sometimes we need to optimize quickly the dabase or watch how tables are growing
 
 This is a quick way to list all tables os a such database and sort them by rows count.
 
-# Query
+# Query [.sql](sql/sql-table-rows-count.sql)
 
 ```
 SELECT
