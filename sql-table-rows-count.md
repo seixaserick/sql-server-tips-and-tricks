@@ -1,25 +1,31 @@
-# SQL Server tips and tricks
+# Discovering all tables of database and respective rows count
 
-![Project Cover](./img/project-cover.png "SQL Server tips and tricks")
+![Project Cover](./img/sql-table-record-count.png "Tables and Record count")
  
 # Context
 
-This project contains a lot of Microsoft SQL Server tips and tricks useful for programmers and DBA.
+Sometimes we need to optimize quickly the dabase or watch how tables are growing.
 
+This is a quick way to list all tables os a such database and sort them by rows count.
 
-# Index
+# Query
 
-- Setup a SQL Server on Docker (linux version) with timezone, password
-- Restoring Databases throught sqlcmd (command line) from outside your container
-- Discovering all tables of database and number of rows
-- Transaction Isolation Levels (NOLOCK, READ UNCOMMITED, READ COMMITED etc.)
-
+```
+SELECT
+ SCHEMA_NAME(T.schema_id) + '.' + T.Name    AS TableName 
+, SUM(P.rows)                               AS RecordCount 
+FROM        sys.objects    AS T 
+INNER JOIN  sys.partitions AS P
+      ON T.object_id = P.object_id AND T.type = 'U' 
+GROUP BY T.schema_id     , T.Name 
+ORDER BY RecordCount DESC, TableName ASC
+```
 
 
 # About the Author and license
 - **Erick** is a Senior Backend Developer and Architect. 
-- You can reach **Erick** by email <seixaserick77@gmail.com> or Linkedin <https://www.linkedin.com/in/seixaserick/>
-- Other Github Repositories: <https://github.com/seixaserick/> 
+- More [SQL tips and tricks](README.md)
+- Other [Github projects](https://github.com/seixaserick/)
 - MIT License (please check [LICENSE.txt](LICENSE.txt) for more details)
 
  
