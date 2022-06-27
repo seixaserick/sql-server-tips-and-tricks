@@ -4,11 +4,13 @@ A CPF number is the Brazilian Tax ID. Today, as a person, you need CPF for almos
 
 The CPF has 11 digits (9 digits + 2 checking digits). Example: "12345678901" or formatted as "123.456.789-01" where the last 2 digits "01" are the digest value (validator).
 
-In this example I created a SQL scalar function to generate randomic fake CPF numbers with valid digest digits (last 2 digits).
+In this example I created a SQL scalar-valued function to generate random fake CPF numbers with valid digest digits (last 2 digits).
 
-We use this function to populate test data without LGPD regulation problems.  LGPD is the Brazilian federal law for Customer Data Protection and regulation (like GDPR, CCPA, POPI - Privacy Regulations)
+We use this function to populate test data without LGPD regulation problems.  
 
-From the first 9 numbers, the two checking digits are generated. If they are equal to the input provided, the CPF is valid.
+LGPD is the Brazilian federal law for Customer Data Protection and regulation (like GDPR, CCPA, POPI - Privacy Regulations)
+
+From the first 9 numbers, the two checking digits are generated.
 
 
 Checking digits calculation:
@@ -30,12 +32,12 @@ Second digit (K): (Same calculation but including digit J)
 
 */
 
---CREATE OR ALTER statement works on SQL 2016 or greater
+--CREATE OR ALTER statement only works in SQL 2016 version or greater. Use DROP + CREATE in previous SQL versions.
 CREATE OR ALTER FUNCTION dbo.GenerateFakeCpf()
 RETURNS  VARCHAR(11)
 AS
 BEGIN
-   /* esta funcao quando chamada  retorna um varchar(11) que é um número de CPF válido, porém de mentira, para ser usadas na criacao de bases de dados de mentira */
+   /* This function returns a varchar(11) with a fake, but valid, CPF number to be used as testing data according to data protection regulations  */
    DECLARE
         @n1 INT,
         @n2 INT,
@@ -53,7 +55,7 @@ BEGIN
         @d2 INT,
 	  @rndString VARCHAR(9)
 
-        --creating the CPF prefix => random 9 chars ("123456789") using CHECKSUM( PWDENCRYPT(N'')) because rand() produces an error when running in SQL scalar-functions
+        --creating the CPF prefix => random 9 chars ("123456789") using CHECKSUM( PWDENCRYPT(N'')) because rand() produces an error in SQL scalar-valued functions
 	  SET @rndString = RIGHT(  CAST( ABS( CHECKSUM( PWDENCRYPT(N''))) AS VARCHAR) + CAST( ABS( CHECKSUM( PWDENCRYPT(N''))) AS VARCHAR), 9)
         
         SET @n1 = CAST( SUBSTRING(@rndString,1,1) AS INT)
