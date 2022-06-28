@@ -23,7 +23,8 @@ This project contains a lot of Microsoft SQL Server tips and tricks useful for p
 # Index
 - [Discovering all tables of database and respective rows count](sql-table-rows-count.md)   
 - [Creating a SQL scalar-valed function to generate fake CPF numbers (CPF is the Tax ID number in Brazil for individuals)](sql/sql-function-generate-cpf.sql)   
-- [Creating a SQL scalar-valed function to generate fake CNPJ numbers (CNPJ is the Tax ID number in Brazil for companies)](sql/sql-function-generate-cnpj.sql)   
+- [Creating a SQL scalar-valed function to generate fake CNPJ numbers (CNPJ is the Tax ID number in Brazil for companies)](sql/sql-function-generate-cnpj.sql)  
+- [Discovering columns in all database tables searching by column name](sql/sql-discover-columns-by-culumn-name.sql) 
 
 
 
